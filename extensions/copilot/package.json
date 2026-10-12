@@ -2,7 +2,7 @@
   "name": "copilot-chat",
   "displayName": "GitHub Copilot",
   "description": "AI chat features powered by Copilot",
-  "version": "0.69.0",
+  "version": "0.70.0",
   "build": "1",
   "completionsCoreVersion": "1.378.1799",
   "internalLargeStorageAriaKey": "ec712b3202c5462fb6877acae7f1f9d7-c19ad55e-3e3c-4f99-984b-827f6d95bd9e-6917",
@@ -22,7 +22,7 @@
   "icon": "assets/copilot.png",
   "pricing": "Trial",
   "engines": {
-    "vscode": "^1.141.0",
+    "vscode": "^1.142.0",
     "npm": ">=9.0.0",
     "node": ">=22.14.0"
   },
@@ -81,7 +81,6 @@
     "onStartupFinished",
     "onLanguageModelChat:copilot",
     "onUri",
-    "onCommand:_github.copilot.chat.reportHarnessSwitchFeedbackSurvey",
     "onCommand:_github.copilot.chat.reportModelFeedbackSurvey",
     "onFileSystem:ccreq",
     "onFileSystem:ccsettings"
@@ -1115,7 +1114,7 @@
         "toolReferenceName": "switchAgent",
         "displayName": "%copilot.tools.switchAgent.name%",
         "userDescription": "%copilot.tools.switchAgent.description%",
-        "modelDescription": "Switch to the Plan agent to align on approach before implementing. Plan will explore the codebase, gathers context, clarifies requirements with the user, and creates an actionable implementation plan.\n\nSWITCH TO PLAN when ANY of these apply:\n1. Adding new functionality - where should it go? What patterns to follow?\n2. Multiple valid approaches exist - choosing between technologies, patterns, or strategies\n3. Modifying existing behavior - unclear what should change or what side effects exist\n4. Architectural decisions required - choosing between design patterns or integration approaches\n5. Changes span multiple files - refactoring, migrations, or cross-cutting concerns\n6. Requirements are underspecified - need to explore before understanding scope\n\nEXAMPLES:\n✓ Switch to Plan:\n- \"Add authentication to the app\" → architectural decisions needed (session vs JWT, middleware)\n- \"Refactor this data flow\" → must understand component dependencies first\n- \"Migrate from X to Y\" → requires understanding current structure\n\n✗ Do NOT switch to Plan:\n- User attached a detailed spec, plan, or requirements doc → context already provided\n- You already started editing files in this conversation → too late to switch\n- Single obvious change like fixing a typo or renaming → just do it\n- User gave explicit step-by-step instructions → follow them directly",
+        "modelDescription": "Switch to the Plan agent to align on approach before implementing. Plan will explore the codebase, gathers context, clarifies requirements with the user, and creates an actionable implementation plan.\n\nSWITCH TO PLAN when ANY of these apply:\n1. Adding new functionality - where should it go? What patterns to follow?\n2. Multiple valid approaches exist - choosing between technologies, patterns, or strategies\n3. Modifying existing behavior - unclear what should change or what side effects exist\n4. Architectural decisions required - choosing between design patterns or integration approaches\n5. Changes span multiple files - refactoring, migrations, or cross-cutting concerns\n6. Requirements are underspecified - need to explore before understanding scope\n\nEXAMPLES:\n\u2713 Switch to Plan:\n- \"Add authentication to the app\" \u2192 architectural decisions needed (session vs JWT, middleware)\n- \"Refactor this data flow\" \u2192 must understand component dependencies first\n- \"Migrate from X to Y\" \u2192 requires understanding current structure\n\n\u2717 Do NOT switch to Plan:\n- User attached a detailed spec, plan, or requirements doc \u2192 context already provided\n- You already started editing files in this conversation \u2192 too late to switch\n- Single obvious change like fixing a typo or renaming \u2192 just do it\n- User gave explicit step-by-step instructions \u2192 follow them directly",
         "when": "config.github.copilot.chat.switchAgent.enabled",
         "icon": "$(arrow-swap)",
         "inputSchema": {
@@ -1139,7 +1138,7 @@
         "displayName": "Memory",
         "toolReferenceName": "memory",
         "userDescription": "Manage persistent memory across conversations",
-        "modelDescription": "Manage a persistent memory system with three scopes for storing notes and information across conversations.\n\nMemory is organized under /memories/ with three tiers:\n- `/memories/` — User memory: persistent notes that survive across all workspaces and conversations. Store preferences, patterns, and general insights here.\n- `/memories/session/` — Session memory: notes scoped to the current conversation. Store task-specific context and in-progress notes here. Cleared after the conversation ends.\n- `/memories/repo/` — Repository memory: repository-scoped notes stored locally in the workspace. Store codebase conventions, build commands, project structure facts, and verified practices here.\n\nIMPORTANT: Before creating new memory files, first view the /memories/ directory to understand what already exists. This helps avoid duplicates and maintain organized notes.\n\nCommands:\n- `view`: View contents of a file or list directory contents. Can be used on files or directories (e.g., \"/memories/\" to see all top-level items).\n- `create`: Create a new file at the specified path with the given content. Fails if the file already exists.\n- `str_replace`: Replace an exact string in a file with a new string. The old_str must appear exactly once in the file.\n- `insert`: Insert text at a specific line number in a file. Line 0 inserts at the beginning.\n- `delete`: Delete a file or directory (and all its contents).\n- `rename`: Rename or move a file or directory from path to new_path. Cannot rename across scopes.",
+        "modelDescription": "Manage a persistent memory system with three scopes for storing notes and information across conversations.\n\nMemory is organized under /memories/ with three tiers:\n- `/memories/` \u2014 User memory: persistent notes that survive across all workspaces and conversations. Store preferences, patterns, and general insights here.\n- `/memories/session/` \u2014 Session memory: notes scoped to the current conversation. Store task-specific context and in-progress notes here. Cleared after the conversation ends.\n- `/memories/repo/` \u2014 Repository memory: repository-scoped notes stored locally in the workspace. Store codebase conventions, build commands, project structure facts, and verified practices here.\n\nIMPORTANT: Before creating new memory files, first view the /memories/ directory to understand what already exists. This helps avoid duplicates and maintain organized notes.\n\nCommands:\n- `view`: View contents of a file or list directory contents. Can be used on files or directories (e.g., \"/memories/\" to see all top-level items).\n- `create`: Create a new file at the specified path with the given content. Fails if the file already exists.\n- `str_replace`: Replace an exact string in a file with a new string. The old_str must appear exactly once in the file.\n- `insert`: Insert text at a specific line number in a file. Line 0 inserts at the beginning.\n- `delete`: Delete a file or directory (and all its contents).\n- `rename`: Rename or move a file or directory from path to new_path. Cannot rename across scopes.",
         "inputSchema": {
           "type": "object",
           "properties": {
@@ -1239,7 +1238,7 @@
         "toolReferenceName": "sessionStoreSql",
         "when": "github.copilot.sessionSearch.enabled",
         "userDescription": "Query your Copilot session history using SQL",
-        "modelDescription": "Query the local session store containing history from past coding sessions. Uses SQLite syntax (NOT DuckDB or Postgres). SQL queries are read-only — only SELECT and WITH are allowed. Use `datetime('now', '-1 day')` for date math (NOT `now() - INTERVAL '1 day'`), FTS5 `MATCH` for text search.\n\nTables: `sessions`, `turns`, `session_files`, `session_refs`, `checkpoints`, `search_index`. For column details and query patterns, use the **chronicle** skill.\n\nActions: 'query' (execute SQL — supports JOINs, FTS5 MATCH, aggregations), 'reindex' (rebuild index from debug logs).",
+        "modelDescription": "Query the local session store containing history from past coding sessions. Uses SQLite syntax (NOT DuckDB or Postgres). SQL queries are read-only \u2014 only SELECT and WITH are allowed. Use `datetime('now', '-1 day')` for date math (NOT `now() - INTERVAL '1 day'`), FTS5 `MATCH` for text search.\n\nTables: `sessions`, `turns`, `session_files`, `session_refs`, `checkpoints`, `search_index`. For column details and query patterns, use the **chronicle** skill.\n\nActions: 'query' (execute SQL \u2014 supports JOINs, FTS5 MATCH, aggregations), 'reindex' (rebuild index from debug logs).",
         "tags": [],
         "canBeReferencedInPrompt": false,
         "inputSchema": {
@@ -1255,7 +1254,7 @@
             },
             "query": {
               "type": "string",
-              "description": "A single read-only SQL query to execute. Required when action is 'query'. Supports SELECT, WITH, JOINs, aggregations, and FTS5 MATCH. Only one statement per call — do not combine multiple queries with semicolons."
+              "description": "A single read-only SQL query to execute. Required when action is 'query'. Supports SELECT, WITH, JOINs, aggregations, and FTS5 MATCH. Only one statement per call \u2014 do not combine multiple queries with semicolons."
             },
             "force": {
               "type": "boolean",
@@ -1275,7 +1274,7 @@
                 "improve",
                 "reindex"
               ],
-              "description": "The chronicle subcommand that triggered this call (e.g. 'tips' for /chronicle tips). Used for telemetry attribution only — pass this whenever the call originates from a /chronicle slash command."
+              "description": "The chronicle subcommand that triggered this call (e.g. 'tips' for /chronicle tips). Used for telemetry attribution only \u2014 pass this whenever the call originates from a /chronicle slash command."
             }
           },
           "required": [
@@ -1870,11 +1869,11 @@
               "secret": true,
               "description": "API key for the models",
               "title": "API Key",
-              "markdownDeprecationMessage": "**Deprecated.** Use the `customendpoint` provider (\"Custom Endpoint\") instead. It supports the Chat Completions API, the Responses API, and the Messages API — selectable per model via the `apiType` property."
+              "markdownDeprecationMessage": "**Deprecated.** Use the `customendpoint` provider (\"Custom Endpoint\") instead. It supports the Chat Completions API, the Responses API, and the Messages API \u2014 selectable per model via the `apiType` property."
             },
             "models": {
               "type": "array",
-              "markdownDeprecationMessage": "**Deprecated.** Use the `customendpoint` provider (\"Custom Endpoint\") instead. It supports the Chat Completions API, the Responses API, and the Messages API — selectable per model via the `apiType` property.",
+              "markdownDeprecationMessage": "**Deprecated.** Use the `customendpoint` provider (\"Custom Endpoint\") instead. It supports the Chat Completions API, the Responses API, and the Messages API \u2014 selectable per model via the `apiType` property.",
               "defaultSnippets": [
                 {
                   "label": "New Model",
@@ -1969,7 +1968,7 @@
                       "responses",
                       "messages"
                     ],
-                    "markdownDescription": "Body shape used to forward the reasoning effort to the model. `chat-completions` sends a top-level `reasoning_effort` string. `responses` sends a nested `reasoning.effort` object. `messages` sends the Anthropic Messages `output_config.effort` field. When unset the format follows the URL: `/responses` → nested, `/messages` → `output_config.effort`, otherwise top-level."
+                    "markdownDescription": "Body shape used to forward the reasoning effort to the model. `chat-completions` sends a top-level `reasoning_effort` string. `responses` sends a nested `reasoning.effort` object. `messages` sends the Anthropic Messages `output_config.effort` field. When unset the format follows the URL: `/responses` \u2192 nested, `/messages` \u2192 `output_config.effort`, otherwise top-level."
                   },
                   "requestHeaders": {
                     "type": "object",
@@ -2157,6 +2156,11 @@
                     "default": false,
                     "markdownDescription": "Whether Zero Data Retention (ZDR) is enabled for this endpoint. When `true`, `previous_response_id` will not be sent in requests via Responses API."
                   },
+                  "statefulResponses": {
+                    "type": "boolean",
+                    "default": true,
+                    "markdownDescription": "Whether the Responses API server retains prior responses. When `true`, requests chain via `previous_response_id` and send only new history. Set to `false` for stateless servers that ignore `previous_response_id` (for example DeepSeek), so the full history is sent on every request. Ignored when `zeroDataRetentionEnabled` is `true`."
+                  },
                   "supportsReasoningEffort": {
                     "type": "array",
                     "markdownDescription": "Reasoning effort levels the model accepts (e.g. `[\"low\", \"medium\", \"high\"]`). When set, a `Thinking Effort` picker is shown in the model picker and the chosen value is forwarded to the model. Levels supported by mainstream OpenAI-compatible servers are `minimal`, `low`, `medium`, `high`.",
@@ -2171,7 +2175,7 @@
                       "responses",
                       "messages"
                     ],
-                    "markdownDescription": "Body shape used to forward the reasoning effort to the model. `chat-completions` sends a top-level `reasoning_effort` string. `responses` sends a nested `reasoning.effort` object. `messages` sends the Anthropic Messages `output_config.effort` field. When unset the format follows the URL: `/responses` → nested, `/messages` → `output_config.effort`, otherwise top-level."
+                    "markdownDescription": "Body shape used to forward the reasoning effort to the model. `chat-completions` sends a top-level `reasoning_effort` string. `responses` sends a nested `reasoning.effort` object. `messages` sends the Anthropic Messages `output_config.effort` field. When unset the format follows the URL: `/responses` \u2192 nested, `/messages` \u2192 `output_config.effort`, otherwise top-level."
                   },
                   "requestHeaders": {
                     "type": "object",
@@ -2325,7 +2329,7 @@
                       "responses",
                       "messages"
                     ],
-                    "markdownDescription": "Body shape used to forward the reasoning effort to the model. `chat-completions` sends a top-level `reasoning_effort` string. `responses` sends a nested `reasoning.effort` object. `messages` sends the Anthropic Messages `output_config.effort` field. When unset the format follows the URL: `/responses` → nested, `/messages` → `output_config.effort`, otherwise top-level."
+                    "markdownDescription": "Body shape used to forward the reasoning effort to the model. `chat-completions` sends a top-level `reasoning_effort` string. `responses` sends a nested `reasoning.effort` object. `messages` sends the Anthropic Messages `output_config.effort` field. When unset the format follows the URL: `/responses` \u2192 nested, `/messages` \u2192 `output_config.effort`, otherwise top-level."
                   },
                   "requestHeaders": {
                     "type": "object",
@@ -3256,18 +3260,18 @@
             "enumDescriptions": [
               "Use VS Code's configured display language",
               "English",
-              "français",
+              "fran\u00e7ais",
               "italiano",
               "Deutsch",
-              "español",
-              "русский",
-              "中文(简体)",
-              "中文(繁體)",
-              "日本語",
-              "한국어",
-              "čeština",
-              "português",
-              "Türkçe",
+              "espa\u00f1ol",
+              "\u0440\u0443\u0441\u0441\u043a\u0438\u0439",
+              "\u4e2d\u6587(\u7b80\u4f53)",
+              "\u4e2d\u6587(\u7e41\u9ad4)",
+              "\u65e5\u672c\u8a9e",
+              "\ud55c\uad6d\uc5b4",
+              "\u010de\u0161tina",
+              "portugu\u00eas",
+              "T\u00fcrk\u00e7e",
               "polski"
             ],
             "default": "auto",
@@ -4439,6 +4443,10 @@
                 "family": {
                   "type": "string",
                   "description": "Alias the model's family for capability routing (e.g. 'claude-opus-4.7')."
+                },
+                "thinkingInHistory": {
+                  "type": "boolean",
+                  "description": "%github.copilot.config.thinkingInHistory%"
                 }
               },
               "additionalProperties": false
@@ -5404,7 +5412,7 @@
             "default": 0,
             "minimum": 0,
             "scope": "application",
-            "markdownDescription": "Maximum size **in characters** for free-form OTel content attributes (prompts, responses, tool arguments/results, hook input/output). `0` (the default) disables truncation so backends without per-attribute size limits receive full JSON payloads. Set to a positive value when your OTel backend caps attribute size — consult your backend's documentation for its per-attribute limit. Truncated values are suffixed with `...[truncated, original N chars]`. Configurable in user settings only. Env var `COPILOT_OTEL_MAX_ATTRIBUTE_SIZE_CHARS` takes precedence. Requires window reload.",
+            "markdownDescription": "Maximum size **in characters** for free-form OTel content attributes (prompts, responses, tool arguments/results, hook input/output). `0` (the default) disables truncation so backends without per-attribute size limits receive full JSON payloads. Set to a positive value when your OTel backend caps attribute size \u2014 consult your backend's documentation for its per-attribute limit. Truncated values are suffixed with `...[truncated, original N chars]`. Configurable in user settings only. Env var `COPILOT_OTEL_MAX_ATTRIBUTE_SIZE_CHARS` takes precedence. Requires window reload.",
             "tags": [
               "advanced"
             ]
@@ -6864,6 +6872,14 @@
         ]
       },
       {
+        "path": "./assets/prompts/skills/migrate-customizations/SKILL.md",
+        "sessionTypes": [
+          "copilotcli",
+          "claude",
+          "codex"
+        ]
+      },
+      {
         "path": "./assets/prompts/skills/init/SKILL.md",
         "sessionTypes": [
           "local"
@@ -6901,6 +6917,7 @@
       },
       {
         "path": "./assets/prompts/skills/create-canvas/SKILL.md",
+        "when": "config.chat.canvases.enabled",
         "sessionTypes": [
           "copilotcli"
         ]
@@ -6931,7 +6948,7 @@
   },
   "scripts": {
     "postinstall": "tsx ./script/postinstall.ts",
-    "build": "node .esbuild.mts --sourcemaps",
+    "build": "node init && node .esbuild.mts --sourcemaps",
     "compile": "node .esbuild.mts --dev",
     "watch": "npm-run-all -lp watch:esbuild watch:typecheck",
     "watch:esbuild": "node .esbuild.mts --watch --dev",
